@@ -39,4 +39,13 @@ public class BreweryClientIntegrationTest {
 		
 		log.info(uri.toString());
 	}
+	
+	@Test
+	void updateBeerById() {
+		BeerDTO beerDTO = BeerDTO.builder()
+			 	.name("Beer")
+			 .build();
+		
+		breweryClient.updateBeerById(UUID.randomUUID(), beerDTO);
+	}
 }
