@@ -2,33 +2,41 @@ package com.client.beerserviceclient.web.client;
 
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.boot.context.properties.ConstructorBinding;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 
 import com.client.beerserviceclient.web.model.BeerDTO;
 
-@Component
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @ConfigurationProperties(value = "brewery", ignoreUnknownFields = false)
+@ConstructorBinding
 public class BreweryClient {
 
 	public final String BEER_PATH_V0 = "/api/v0/beer/";
 	
-	private String apiHost;
+	private final String apiHost;
 	
-	private final RestTemplate restTemplate;
+	@Autowired
+	private RestTemplate restTemplate;
 
-	public BreweryClient(RestTemplateBuilder restTemplateBuilder) {
+	public BreweryClient(String apiHost) {
 		super();
-		this.restTemplate = restTemplateBuilder.build();
+		this.apiHost = apiHost;
+		log.info("API HOST        : " + apiHost);
+		log.info("BEER API V0 PATH: " + BEER_PATH_V0);
 	}
 	
-	public BeerDTO getBeeryById(UUID id) {
+	public BeerDTO getBeerById(UUID id) {
 		return restTemplate.getForObject(apiHost + BEER_PATH_V0 + id.toString(), BeerDTO.class);
 	}
 
-	public void setApiHost(String apiHost) {
-		this.apiHost = apiHost;
-	}
+//	public void setApiHost(String apiHost) {
+//		this.apiHost = apiHost;
+//	}
 }
