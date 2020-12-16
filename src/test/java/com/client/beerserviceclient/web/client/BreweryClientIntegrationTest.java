@@ -48,4 +48,9 @@ public class BreweryClientIntegrationTest {
 		
 		breweryClient.updateBeerById(UUID.randomUUID(), beerDTO);
 	}
+	
+	@Test
+	void deleteBeerById() {
+		breweryClient.deleteBeerById(UUID.randomUUID());
+	}
 }
