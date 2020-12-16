@@ -1,5 +1,6 @@
 package com.client.beerserviceclient.web.client;
 
+import java.net.URI;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,5 +35,9 @@ public class BreweryClient {
 	
 	public BeerDTO getBeerById(UUID id) {
 		return restTemplate.getForObject(apiHost + BEER_PATH_V0 + id.toString(), BeerDTO.class);
+	}
+	
+	public URI createNewBeer(BeerDTO beerDTO) {
+		return restTemplate.postForLocation(apiHost + BEER_PATH_V0, beerDTO);
 	}
 }
